@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venkateswarlu — Java Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0A0A0F;
+    --surface: #111118;
+    --surface2: #18181F;
+    --ink: #F0EEE8;
+    --ink-soft: #8A8A9A;
+    --accent: #7DF9C2;
+    --accent2: #C8A96E;
+    --accent-dim: rgba(125,249,194,0.08);
+    --accent-dim2: rgba(125,249,194,0.15);
+    --border: rgba(255,255,255,0.07);
+    --border-bright: rgba(125,249,194,0.25);
+    --mono: 'JetBrains Mono', monospace;
+    --serif: 'Fraunces', serif;
+    --sans: 'Syne', sans-serif;
+    --glow: 0 0 40px rgba(125,249,194,0.15);
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: linear-gradient(rgba(125,249,194,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(125,249,194,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none; z-index: 0;
+  }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--mono); font-size: 0.8rem; color: var(--accent); letter-spacing: 0.08em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a { font-size: 0.82rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-hire {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--accent); color: #0A0A0F !important;
+    padding: 0.45rem 1.1rem; border-radius: 2px;
+    font-size: 0.78rem !important; font-weight: 700 !important; letter-spacing: 0.06em;
+    transition: all 0.2s !important;
+  }
+  .nav-hire:hover { background: #5de8aa !important; color: #0A0A0F !important; transform: translateY(-1px); box-shadow: var(--glow); }
+  .hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 8rem 4rem 4rem; gap: 4rem;
+    max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;
+  }
+  .hero-badges { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--mono); font-size: 0.7rem; color: var(--accent);
+    background: var(--accent-dim); border: 1px solid var(--border-bright);
+    padding: 0.35rem 0.85rem; border-radius: 2px; letter-spacing: 0.08em;
+  }
+  .hero-tag.hiring { background: rgba(200,169,110,0.1); color: var(--accent2); border-color: rgba(200,169,110,0.3); }
+  .hero-tag::before { content: ''; width: 5px; height: 5px; background: currentColor; border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+  .hero h1 { font-family: var(--serif); font-size: clamp(2.8rem, 5vw, 4.4rem); line-height: 1.05; color: var(--ink); margin-bottom: 1.2rem; font-weight: 300; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-desc { font-size: 1rem; color: var(--ink-soft); line-height: 1.8; margin-bottom: 2rem; max-width: 480px; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--accent); color: #0A0A0F; padding: 0.85rem 1.8rem; border-radius: 2px;
+    font-size: 0.85rem; font-weight: 700; text-decoration: none; letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .btn-primary:hover { background: #5de8aa; transform: translateY(-2px); box-shadow: var(--glow); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: transparent; color: var(--ink-soft); padding: 0.85rem 1.8rem; border-radius: 2px;
+    border: 1px solid var(--border); font-size: 0.85rem; font-weight: 500; text-decoration: none; transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+    padding: 2.5rem; position: relative; overflow: hidden;
+  }
+  .hero-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2), transparent); }
+  .hero-card::after { content: ''; position: absolute; top: -60px; right: -60px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(125,249,194,0.06) 0%, transparent 70%); pointer-events: none; }
+  .card-greeting { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); margin-bottom: 1rem; letter-spacing: 0.1em; }
+  .card-name { font-family: var(--serif); font-size: 1.7rem; margin-bottom: 0.3rem; font-weight: 300; }
+  .card-title { font-size: 0.82rem; color: var(--ink-soft); margin-bottom: 0.3rem; font-family: var(--mono); }
+  .card-phone { font-size: 0.78rem; color: var(--accent); font-family: var(--mono); margin-bottom: 1.4rem; letter-spacing: 0.04em; }
+  .card-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.5rem; }
+  .stat { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 0.9rem; text-align: center; transition: border-color 0.2s; }
+  .stat:hover { border-color: var(--border-bright); }
+  .stat-num { font-family: var(--serif); font-size: 1.8rem; color: var(--accent); line-height: 1; }
+  .stat-label { font-size: 0.65rem; color: var(--ink-soft); margin-top: 0.3rem; font-family: var(--mono); letter-spacing: 0.06em; }
+  .card-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag { font-family: var(--mono); font-size: 0.65rem; padding: 0.28rem 0.6rem; background: var(--accent-dim); color: var(--accent); border-radius: 2px; border: 1px solid var(--border-bright); letter-spacing: 0.04em; }
+  section { max-width: 1200px; margin: 0 auto; padding: 5rem 4rem; position: relative; z-index: 1; }
+  .section-label { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .section-title { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 2.8rem); line-height: 1.1; margin-bottom: 3rem; font-weight: 300; }
+  .divider { width: 100%; height: 1px; background: var(--border); max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
+  .skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1.8rem; transition: all 0.25s; }
+  .skill-card:hover { border-color: var(--border-bright); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(125,249,194,0.06); }
+  .skill-icon { width: 38px; height: 38px; background: var(--accent-dim); border: 1px solid var(--border-bright); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: 1rem; }
+  .skill-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.6rem; letter-spacing: 0.02em; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .skill-tag { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-soft); background: var(--surface2); padding: 0.2rem 0.55rem; border-radius: 2px; border: 1px solid var(--border); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.2rem; }
+  .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 2rem; display: flex; flex-direction: column; transition: all 0.25s; position: relative; overflow: hidden; }
+  .project-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.3s; }
+  .project-card:hover::after { width: 100%; }
+  .project-card:hover { transform: translateY(-3px); border-color: var(--border-bright); box-shadow: 0 12px 40px rgba(125,249,194,0.05); }
+  .project-num { font-family: var(--mono); font-size: 0.65rem; color: var(--accent2); margin-bottom: 1rem; letter-spacing: 0.1em; }
+  .project-card h3 { font-family: var(--serif); font-size: 1.2rem; margin-bottom: 0.75rem; font-weight: 300; }
+  .project-card p { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.7; flex: 1; margin-bottom: 1.25rem; }
+  .project-footer { display: flex; align-items: center; justify-content: space-between; }
+  .project-link { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 0.35rem; transition: gap 0.2s; }
+  .project-link:hover { gap: 0.6rem; }
+  .exp-list { display: flex; flex-direction: column; }
+  .exp-item { display: grid; grid-template-columns: 200px 1fr; gap: 3rem; padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+  .exp-item:first-child { border-top: 1px solid var(--border); }
+  .exp-period { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); letter-spacing: 0.04em; padding-top: 0.2rem; }
+  .exp-company { font-size: 0.78rem; color: var(--accent); font-weight: 600; margin-top: 0.4rem; letter-spacing: 0.04em; }
+  .exp-role { font-family: var(--serif); font-size: 1.2rem; margin-bottom: 0.6rem; font-weight: 300; }
+  .exp-bullets { margin-top: 0.75rem; padding-left: 1rem; list-style: none; }
+  .exp-bullets li { font-size: 0.83rem; color: var(--ink-soft); padding: 0.3rem 0; position: relative; }
+  .exp-bullets li::before { content: '->'; position: absolute; left: -1.2rem; color: var(--accent); font-size: 0.72rem; font-family: var(--mono); }
+  .dsa-section {
+    background: var(--surface); border: 1px solid var(--border-bright); border-radius: 8px;
+    padding: 3.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; position: relative; overflow: hidden;
+  }
+  .dsa-section::before { content: ''; position: absolute; top: -80px; left: -80px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(125,249,194,0.05) 0%, transparent 70%); pointer-events: none; }
+  .dsa-title { font-family: var(--serif); font-size: 2.2rem; margin-bottom: 1rem; line-height: 1.1; font-weight: 300; }
+  .dsa-desc { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.8; }
+  .dsa-platforms { display: flex; flex-direction: column; gap: 0.85rem; }
+  .platform-item { background: var(--surface2); border-radius: 4px; padding: 1.1rem 1.4rem; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border); transition: border-color 0.2s; }
+  .platform-item:hover { border-color: var(--border-bright); }
+  .platform-name { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-soft); letter-spacing: 0.08em; }
+  .platform-count { font-family: var(--serif); font-size: 1.4rem; color: var(--accent); }
+  .edu-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .edu-table th { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; padding: 0.75rem 1.2rem; text-align: left; border-bottom: 1px solid var(--border-bright); background: var(--accent-dim); }
+  .edu-table td { padding: 1.1rem 1.2rem; border-bottom: 1px solid var(--border); color: var(--ink-soft); vertical-align: middle; }
+  .edu-table tr:last-child td { border-bottom: none; }
+  .edu-table tr:hover td { color: var(--ink); background: var(--surface2); }
+  .edu-score { font-family: var(--mono); color: var(--accent); font-size: 0.82rem; }
+  .edu-title { color: var(--ink); font-weight: 600; }
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+  .cert-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.2rem 1.4rem; display: flex; align-items: center; gap: 1rem; transition: all 0.2s; }
+  .cert-card:hover { border-color: var(--border-bright); transform: translateY(-2px); }
+  .cert-icon { width: 32px; height: 32px; background: var(--accent-dim); border: 1px solid var(--border-bright); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+  .cert-name { font-size: 0.82rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .cert-issuer { font-size: 0.7rem; color: var(--ink-soft); font-family: var(--mono); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-left p { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.85; margin-bottom: 2rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 0.85rem; }
+  .contact-link { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; text-decoration: none; color: var(--ink); font-size: 0.85rem; transition: all 0.2s; }
+  .contact-link:hover { border-color: var(--border-bright); color: var(--accent); background: var(--surface2); }
+  .contact-link-icon { width: 34px; height: 34px; background: var(--accent-dim); border: 1px solid var(--border-bright); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+  .contact-link-text { font-weight: 600; font-size: 0.82rem; }
+  .contact-link-sub { font-size: 0.7rem; color: var(--ink-soft); font-family: var(--mono); margin-top: 0.1rem; }
+  .contact-form-alt { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 2.5rem; }
+  .contact-form-alt h3 { font-family: var(--serif); font-size: 1.4rem; margin-bottom: 0.5rem; font-weight: 300; }
+  .contact-form-alt p { font-size: 0.83rem; color: var(--ink-soft); margin-bottom: 1.5rem; }
+  .open-to-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+  .open-to-list li { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; padding: 0.85rem 1rem; background: var(--accent-dim); border: 1px solid var(--border-bright); border-radius: 3px; color: var(--accent); font-weight: 500; }
+  footer { text-align: center; padding: 2.5rem; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft); letter-spacing: 0.06em; position: relative; z-index: 1; }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; gap: 2.5rem; }
+    section { padding: 3.5rem 1.5rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+    .dsa-section { grid-template-columns: 1fr; padding: 2rem; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .card-stats { grid-template-columns: 1fr 1fr; }
+    .edu-table { font-size: 0.75rem; }
+    .edu-table td, .edu-table th { padding: 0.7rem 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">// venkateswarlu.dev</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="mailto:vsiva8483@gmail.com" class="nav-hire">Hire Me</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-left fade-up">
+    <div class="hero-badges">
+      <div class="hero-tag">Open to Internship · CSE '28</div>
+      <div class="hero-tag hiring">Available for Hiring</div>
+    </div>
+    <h1>Java <em>Backend</em><br>Developer.</h1>
+    <p class="hero-desc">
+      I build clean, reliable backend systems using Java and Spring Boot.
+      Passionate about DSA, OOP architecture, and writing code that solves real problems.
+      2 internships. 7+ projects. Every day improving.
+    </p>
+    <div class="hero-actions">
+      <a href="https://www.linkedin.com/in/venkateswarlu-vankara-boina-a9836a351" target="_blank" class="btn-primary">Connect on LinkedIn</a>
+      <a href="https://github.com/vsiva8483-cpu" target="_blank" class="btn-secondary">View GitHub</a>
+      <a href="mailto:vsiva8483@gmail.com" class="btn-secondary">Email Me</a>
+    </div>
+  </div>
+  <div class="hero-card fade-up">
+    <div class="card-greeting">// hello, world</div>
+    <div class="card-name">Venkateswarlu V.</div>
+    <div class="card-title">Java Developer · Vijayawada, India</div>
+
+    <div class="card-stats">
+      <div class="stat"><div class="stat-num">7+</div><div class="stat-label">Projects Built</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Internships</div></div>
+      <div class="stat"><div class="stat-num">60+</div><div class="stat-label">DSA Solved</div></div>
+      <div class="stat"><div class="stat-num">8.89</div><div class="stat-label">CGPA</div></div>
+    </div>
+    <div class="card-stack">
+      <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">MySQL</span><span class="tag">OOP</span><span class="tag">REST APIs</span><span class="tag">Git</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<section id="skills">
+  <div class="section-label">// 01 — expertise</div>
+  <h2 class="section-title">Technical Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-card fade-up">
+      <div class="skill-icon">☕</div><h3>Core Java</h3>
+      <div class="skill-tags"><span class="skill-tag">Java 17</span><span class="skill-tag">OOP</span><span class="skill-tag">Collections</span><span class="skill-tag">Exception Handling</span><span class="skill-tag">Multithreading</span></div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">🌱</div><h3>Backend Framework</h3>
+      <div class="skill-tags"><span class="skill-tag">Spring Boot</span><span class="skill-tag">Spring Framework</span><span class="skill-tag">Hibernate</span><span class="skill-tag">REST APIs</span><span class="skill-tag">Maven</span><span class="skill-tag">Microservices Basics</span></div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">🗄️</div><h3>Database</h3>
+      <div class="skill-tags"><span class="skill-tag">MySQL</span><span class="skill-tag">SQL</span><span class="skill-tag">JDBC</span></div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">🧩</div><h3>DSA and Problem Solving</h3>
+      <div class="skill-tags"><span class="skill-tag">Arrays</span><span class="skill-tag">Strings</span><span class="skill-tag">Recursion</span><span class="skill-tag">Linked Lists</span><span class="skill-tag">Time Complexity</span></div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">🛠️</div><h3>Tools and Workflow</h3>
+      <div class="skill-tags"><span class="skill-tag">Git</span><span class="skill-tag">GitHub</span><span class="skill-tag">IntelliJ IDEA</span><span class="skill-tag">VS Code</span></div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">📐</div><h3>Architecture and Principles</h3>
+      <div class="skill-tags"><span class="skill-tag">SOLID Principles</span><span class="skill-tag">Design Patterns</span><span class="skill-tag">Clean Code</span><span class="skill-tag">Agile Basics</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="projects">
+  <div class="section-label">// 02 — work</div>
+  <h2 class="section-title">Projects Built</h2>
+  <div class="projects-grid">
+    <div class="project-card fade-up">
+      <div class="project-num">Project 01</div>
+      <h3>SuperHero Battle Arena</h3>
+      <p>Turn-based combat simulation demonstrating Abstraction, Inheritance, Runtime Polymorphism and Constructor Chaining. 3 unique heroes with different attack styles and ultimate powers.</p>
+      <div class="project-footer">
+        <div class="skill-tags"><span class="skill-tag">Java</span><span class="skill-tag">OOP</span><span class="skill-tag">Polymorphism</span></div>
+        <a href="https://github.com/vsiva8483-cpu/SuperHero-Battle-Arena-Java" target="_blank" class="project-link">View on GitHub</a>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-num">Project 02</div>
+      <h3>Expense Tracker</h3>
+      <p>Console-based personal finance tracker built in Java. Users can log, categorize, and analyze spending using Collections Framework for efficient data storage and retrieval.</p>
+      <div class="project-footer">
+        <div class="skill-tags"><span class="skill-tag">Java</span><span class="skill-tag">Collections</span><span class="skill-tag">File I/O</span></div>
+        <a href="https://github.com/vsiva8483-cpu/Expense-Tracker" target="_blank" class="project-link">View on GitHub</a>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-num">Project 03</div>
+      <h3>Stock Trading Simulator</h3>
+      <p>Java console application simulating real stock trading logic — buy/sell operations, portfolio tracking, and profit/loss calculation using arrays and control flow.</p>
+      <div class="project-footer">
+        <div class="skill-tags"><span class="skill-tag">Java</span><span class="skill-tag">Arrays</span><span class="skill-tag">Logic</span></div>
+        <a href="https://github.com/vsiva8483-cpu/Code_Alpha-Stock-Trading-Simulator" target="_blank" class="project-link">View on GitHub</a>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-num">Project 04</div>
+      <h3>Student Grade Tracker</h3>
+      <p>Java console program to manage student records, calculate grades, and generate statistics. Built during Code Alpha internship with clean OOP architecture.</p>
+      <div class="project-footer">
+        <div class="skill-tags"><span class="skill-tag">Java</span><span class="skill-tag">OOP</span><span class="skill-tag">Statistics</span></div>
+        <a href="https://github.com/vsiva8483-cpu/Code_Alpha-Student-Grade-Tracker" target="_blank" class="project-link">View on GitHub</a>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-num">Project 05</div>
+      <h3>Food Ordering System</h3>
+      <p>Menu-driven food ordering backend in Java — handles order placement, item management, and total calculation with clean OOP design, Exception Handling, and MySQL integration.</p>
+      <div class="project-footer">
+        <div class="skill-tags"><span class="skill-tag">Java</span><span class="skill-tag">OOP</span><span class="skill-tag">MySQL</span></div>
+        <a href="https://github.com/vsiva8483-cpu" target="_blank" class="project-link">View on GitHub</a>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-num">Project 06</div>
+      <h3>Subscription Management System</h3>
+      <p>Subscription tracking system in Java — managing user plans, renewal dates, and status tracking using OOP design patterns and Collections Framework.</p>
+      <div class="project-footer">
+        <div class="skill-tags"><span class="skill-tag">Java</span><span class="skill-tag">OOP</span><span class="skill-tag">Collections</span></div>
+        <a href="https://github.com/vsiva8483-cpu" target="_blank" class="project-link">View on GitHub</a>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-num">Project 07</div>
+      <h3>AI Robot System</h3>
+      <p>Rule-based AI robot simulation in Java — implementing decision-making logic and state management using OOP concepts. Demonstrates advanced logic and system design thinking.</p>
+      <div class="project-footer">
+        <div class="skill-tags"><span class="skill-tag">Java</span><span class="skill-tag">Logic</span><span class="skill-tag">OOP</span></div>
+        <a href="https://github.com/vsiva8483-cpu" target="_blank" class="project-link">View on GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="experience">
+  <div class="section-label">// 03 — journey</div>
+  <h2 class="section-title">Experience</h2>
+  <div class="exp-list">
+    <div class="exp-item fade-up">
+      <div>
+        <div class="exp-period">2024</div>
+        <div class="exp-company">Codetech IT Solutions</div>
+      </div>
+      <div>
+        <div class="exp-role">Java Developer Intern</div>
+        <ul class="exp-bullets">
+          <li>Developed Java applications using OOP, Collections and Exception Handling — delivering 2 working projects within internship timeline</li>
+          <li>Debugged and resolved logic errors across multiple modules, reducing runtime issues through systematic problem-solving</li>
+          <li>Followed professional development workflows with Git version control and collaborative code review practices</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item fade-up">
+      <div>
+        <div class="exp-period">2024</div>
+        <div class="exp-company">Code Alpha</div>
+      </div>
+      <div>
+        <div class="exp-role">Java Developer Intern</div>
+        <ul class="exp-bullets">
+          <li>Built functional Java applications from scratch — implementing core backend logic, data handling and OOP design principles</li>
+          <li>Delivered Student Grade Tracker and Stock Trading Simulator during internship</li>
+          <li>Strengthened clean coding skills through practical project-based execution in a professional environment</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item fade-up">
+      <div>
+        <div class="exp-period">2024 – Present</div>
+        <div class="exp-company">Amrita Sai Institute</div>
+      </div>
+      <div>
+        <div class="exp-role">B.Tech Computer Science — 8.89 CGPA</div>
+        <ul class="exp-bullets">
+          <li>Maintaining 8.89 CGPA while building real projects and completing internships simultaneously</li>
+          <li>Actively practicing DSA daily on LeetCode, GeeksforGeeks and HackerRank</li>
+          <li>Building in public — sharing learning journey on LinkedIn consistently</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <div class="dsa-section fade-up">
+    <div>
+      <div class="section-label" style="color:rgba(125,249,194,0.5)">// 04 — problem solving</div>
+      <div class="dsa-title">DSA Practice.<br>Every. Single. Day.</div>
+      <p class="dsa-desc">I don't just write Java — I think in algorithms. Daily problem solving on multiple platforms has sharpened my logical reasoning, time complexity awareness, and debugging instincts.</p>
+    </div>
+    <div class="dsa-platforms">
+      <div class="platform-item"><span class="platform-name">GEEKSFORGEEKS</span><span class="platform-count">60+</span></div>
+      <div class="platform-item"><span class="platform-name">LEETCODE</span><a href="https://leetcode.com/u/Venkateswarlu77/" target="_blank" style="color:var(--accent2);font-family:var(--mono);font-size:0.75rem;text-decoration:none;">View Profile</a></div>
+      <div class="platform-item"><span class="platform-name">HACKERRANK</span><span style="color:var(--accent);font-family:var(--mono);font-size:0.75rem;">Certified</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="education">
+  <div class="section-label">// 05 — academics</div>
+  <h2 class="section-title">Education</h2>
+  <div class="fade-up" style="background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+    <table class="edu-table">
+      <thead>
+        <tr><th>Qualification</th><th>Institution</th><th>Year</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="edu-title">B.Tech (CSE)</span></td><td>Amrita Sai Institute of Science and Technology</td><td>2024–2028</td><td><span class="edu-score">8.89 CGPA</span></td></tr>
+        <tr><td><span class="edu-title">Intermediate</span></td><td>NRI Junior College</td><td>2022–2024</td><td><span class="edu-score">94.5%</span></td></tr>
+        <tr><td><span class="edu-title">SSC</span></td><td>Z.P. High School</td><td>2021–2022</td><td><span class="edu-score">81%</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="certifications">
+  <div class="section-label">// 06 — certifications</div>
+  <h2 class="section-title">Achievements and Certs</h2>
+  <div class="certs-grid">
+    <div class="cert-card fade-up"><div class="cert-icon">📚</div><div><div class="cert-name">DSA Bootcamp</div><div class="cert-issuer">GeeksforGeeks</div></div></div>
+    <div class="cert-card fade-up"><div class="cert-icon">🎓</div><div><div class="cert-name">Object Oriented Programming</div><div class="cert-issuer">Coursera</div></div></div>
+    <div class="cert-card fade-up"><div class="cert-icon">🎓</div><div><div class="cert-name">Data Structures</div><div class="cert-issuer">Coursera</div></div></div>
+    <div class="cert-card fade-up"><div class="cert-icon">☕</div><div><div class="cert-name">Introduction to Java</div><div class="cert-issuer">SoloLearn</div></div></div>
+    <div class="cert-card fade-up"><div class="cert-icon">⭐</div><div><div class="cert-name">Java and Problem Solving (Basic)</div><div class="cert-issuer">HackerRank</div></div></div>
+    <div class="cert-card fade-up"><div class="cert-icon">🏆</div><div><div class="cert-name">Java Object Oriented Programming</div><div class="cert-issuer">MindLuster</div></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="contact">
+  <div class="section-label">// 07 — let's connect</div>
+  <h2 class="section-title">Open to Opportunities</h2>
+  <div class="contact-grid">
+    <div class="contact-left">
+      <p>I'm actively looking for Java Backend Internship roles where I can contribute to real-world systems, grow with a strong engineering team, and bring my problem-solving mindset to meaningful products.</p>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/venkateswarlu-vankara-boina-a9836a351" target="_blank" class="contact-link">
+          <div class="contact-link-icon">💼</div>
+          <div><div class="contact-link-text">LinkedIn Profile</div><div class="contact-link-sub">500+ connections</div></div>
+        </a>
+        <a href="https://github.com/vsiva8483-cpu" target="_blank" class="contact-link">
+          <div class="contact-link-icon">🐙</div>
+          <div><div class="contact-link-text">GitHub Profile</div><div class="contact-link-sub">7+ repositories</div></div>
+        </a>
+        <a href="https://leetcode.com/u/Venkateswarlu77/" target="_blank" class="contact-link">
+          <div class="contact-link-icon">🧩</div>
+          <div><div class="contact-link-text">LeetCode Profile</div><div class="contact-link-sub">Active problem solver</div></div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-form-alt fade-up">
+      <h3>Currently Open To</h3>
+      <p>Roles where I can make real impact from day one.</p>
+      <ul class="open-to-list">
+        <li>🏢 Java Backend Internship</li>
+        <li>☕ Java Developer Role (Entry Level)</li>
+        <li>🌱 Spring Boot Developer Position</li>
+        <li>🤝 Open Source Collaboration</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Built with Java passion · Venkateswarlu Vankaraboina · 2026
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  document.querySelectorAll('.skills-grid, .projects-grid, .certs-grid').forEach(grid => {
+    grid.querySelectorAll('.fade-up').forEach((card, i) => { card.style.transitionDelay = `${i * 0.07}s`; });
+  });
+</script>
+</body>
+</html>
